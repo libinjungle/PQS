@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Main {
   public static void main (String[] args) {
-    AddressBook book = AddressBook.getInstance();
+    AddressBook book = AddressBook.newInstance();
     System.out.println("Initialize the AddressBook with two entries...\n");
     Entry entry1 = new Entry.Builder().setName("Bin Li").setPosAddr("101 Avenue, New York").
                     setPhoneNum("112-112-3211").setEmail("bl1810@nyu.edu").

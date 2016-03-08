@@ -18,11 +18,34 @@ import org.json.simple.JSONObject;
  *
  */
 public class Entry {
-  private String name;
-  private String posAddress;
-  private String phoneNum;
-  private String email;
-  private String note;
+  // I don't want the fields to be mutable.
+  private final String name;
+  private final String posAddress;
+  private final String phoneNum;
+  private final String email;
+  private final String note;
+  
+  // Should include getters for private fields.
+  public String getName() {
+    return this.name;
+  }
+  
+  public String getPosAddress() {
+    return this.posAddress;
+  }
+  
+  public String getPhoneNum() {
+    return this.phoneNum;
+  }
+  
+  public String getEmail() {
+    return this.email;
+  }
+  
+  public String getNote() {
+    return this.note;
+  }
+  
   
   /**
    * Constructs Entry object using Builder pattern.
@@ -133,11 +156,9 @@ public class Entry {
     try {
       value = this.getClass().getDeclaredField(field).get(this);
     } catch (NoSuchFieldException e) {
-      e.printStackTrace();
-    } catch (IllegalArgumentException e) {
-      e.printStackTrace();
+      System.err.println("CaughtNoSuchFieldException: " + e.getMessage());
     } catch (IllegalAccessException e) {
-      e.printStackTrace();
+      System.err.println("CaughtIllegalAccessException: " + e.getMessage());
     }
     return value;
   }
@@ -178,21 +199,24 @@ public class Entry {
    * @return an entry object.
    */
   public static Entry toEntry(JSONObject json) {
-    Entry entry = null;
-    String nameVal = (String)json.get("name");
-    String posAddresVal = (String)json.get("posAddress");
-    String phoneNumVal = (String)json.get("phoneNum");
-    String emailVal = (String)json.get("email");
-    String noteVal = (String)json.get("note");
+    // Don't initilize variables to be null.
+    // Entry entry = null;
+    String nameVal = (String) json.get("name");
+    String posAddresVal = (String) json.get("posAddress");
+    String phoneNumVal = (String) json.get("phoneNum");
+    String emailVal = (String) json.get("email");
+    String noteVal = (String) json.get("note");
     // Build entry object.
-    entry = new Entry.Builder().setName(nameVal).setPosAddr(posAddresVal).
-              setPhoneNum(phoneNumVal).setEmail(emailVal).setNote(noteVal).build();
+    Entry entry = new Entry.Builder().setName(nameVal).setPosAddr(posAddresVal).
+        setPhoneNum(phoneNumVal).setEmail(emailVal).setNote(noteVal).build();
     return entry;
   }
   
   /**
-   * Override toString() to return JSON string.
+   * Include hashCode() and equals() for entry.
    */
+  
+  
   @Override
   public String toString() {
     return this.toJSONObject().toJSONString();

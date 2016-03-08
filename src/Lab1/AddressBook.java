@@ -36,10 +36,11 @@ public class AddressBook {
   private AddressBook() { }
   
   /**
-   * Gets an instance of class object.
+   * Gets an instance of class object. Don't use getInstance() as it is often used 
+   * in singleton pattern.
    * @return AddressBook instance.
    */
-  public static AddressBook getInstance() {
+  public static AddressBook newInstance() {
     return new AddressBook();
   }
   
@@ -50,6 +51,7 @@ public class AddressBook {
    *         false if entry is empty or duplicate.
    */
   public boolean add(Entry entry) {
+    // Don't need to do null check in API.
     if (entry == null || entryList.contains(entry)) {
       return false;
     }
@@ -84,8 +86,7 @@ public class AddressBook {
   }
   
   /**
-   * Saves this address book into a JSON formatted file. Converts each entry into 
-   * a JSON object.
+   * Saves this address book into a JSON formatted file. 
    * @param file A specific file name that is used to save address book to file.
    * @exception IOException.
    */
@@ -112,19 +113,18 @@ public class AddressBook {
     try {
       FileReader reader = new FileReader(fileName);
       JSONArray jArray = (JSONArray)parser.parse(reader);
-      for (int i=0; i<jArray.size(); i++) {
-        JSONObject jObject = (JSONObject)jArray.get(i);
+      for (int i = 0; i < jArray.size(); i++) {
+        JSONObject jObject = (JSONObject) jArray.get(i);
         if (jObject != null) {
           book.add(Entry.toEntry(jObject));
         }
       } 
     } catch (FileNotFoundException e) {
-      e.printStackTrace();
+      System.err.println("CaughtFileNotFoundException: " + e.getMessage());
     } catch (IOException e) {
-      e.printStackTrace();
+      System.err.println("CaughtIOException: " + e.getMessage());
     } catch (ParseException e) {
-      e.printStackTrace();
-    }
+      System.err.println("CaughtParseException: " + e.getMessage());    }
     return book;
   }
   
