@@ -15,10 +15,11 @@ public class Main {
     book.add(entry2);
     System.out.println("There are two entries added. They are...\n");
     System.out.println(book.toString());
-    List<Entry> result = book.search("Jin Li");
+    List<Entry> result = book.search("nyu");
     if (result.isEmpty()) {
       System.out.println("There is something wrong for searching...\n");
     } else {
+      System.out.println("The searched results are...");
       for (Entry entry : result) {
         System.out.println(entry.toString());
       }

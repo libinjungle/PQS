@@ -64,11 +64,7 @@ public class AddressBook {
    *         is not in the entryList.
    */
   public boolean remove(Entry entry) {
-    if (!entryList.contains(entry)) {
-      return false;
-    }
-    entryList.remove(entry);
-    return true;
+    return entryList.remove(entry);
   }
   
   /**

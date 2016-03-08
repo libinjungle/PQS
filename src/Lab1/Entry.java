@@ -144,14 +144,15 @@ public class Entry {
   
   /**
    * Given a fieldValue, find if there is the matched field value for each field 
-   * declared in this class.
+   * declared in this class. Partial match also should work.
    * @param fieldValue This can be any value of those five fields.
    * @return true if there is matched value, or false if there is no such value.
    */
   public boolean hasFieldValue(String fieldValue) {
     List<String> fieldList = getFields();
     for (String field : fieldList) {
-      if (getFieldValue(field).equals(fieldValue)) {
+      String fieldStr = getFieldValue(field).toString();
+      if (fieldStr.toLowerCase().contains(fieldValue.toLowerCase())) {
         return true;
       }
     }
